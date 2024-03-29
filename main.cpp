@@ -132,6 +132,17 @@ int main() {
                         grid[cellY][cellX].setFillColor(sf::Color::Blue);
                     }
                 }
+                if (event.mouseButton.button == sf::Mouse::Right) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
+                    int cellX = static_cast<int>(worldPos.x) / gridSize;
+                    int cellY = static_cast<int>(worldPos.y) / gridSize;
+
+                    if (cellX >= 0 && cellX < grid[0].size() && cellY >= 0 && cellY < grid.size()) {
+                        if (grid[cellY][cellX].getFillColor() == sf::Color::Blue) 
+                            grid[cellY][cellX].setFillColor(sf::Color::White);
+                    }
+                }
             }
         }
         if(randomize) {

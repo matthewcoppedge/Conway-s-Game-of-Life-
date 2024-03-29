@@ -11,6 +11,16 @@ const int gridSize = 10;
 
 bool start = false;
 bool reset_scene = false;
+bool randomize = false;
+
+void randomizeBoard(GRID& grid) {
+    for (auto& row : grid) {
+        for(auto& cel : row) {
+            int a = rand() % 100;
+            (a <= 10) ? cel.setFillColor(sf::Color::Blue) : cel.setFillColor(sf::Color::White); 
+        }
+    }
+}
 
 void reset(GRID& grid) {
     for (auto& row : grid) {
@@ -99,6 +109,13 @@ int main() {
             }
 
             if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Enter) {
+                    randomize = !randomize;
+                }
+            }
+
+
+            if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     reset_scene = !reset_scene;
                 }
@@ -117,6 +134,13 @@ int main() {
                 }
             }
         }
+        if(randomize) {
+            start = false;
+            reset_scene = false;
+            randomizeBoard(grid);
+            randomize = false;
+        }
+
         if (start)
             updateCells(grid);
 
